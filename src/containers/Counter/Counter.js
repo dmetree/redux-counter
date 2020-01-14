@@ -12,26 +12,38 @@ class Counter extends Component {
                 <CounterOutput value={this.props.ctr} />
                 <CounterControl label="Increment" clicked={ this.props.onIncrementCounter } />
                 <CounterControl label="Decrement" clicked={ this.props.onDecrementCounter }  />
-                <CounterControl label="Add 5" clicked={ this.props.onINC5Counter }  />
-                <CounterControl label="Subtract 5" clicked={ this.props.onDEC5Counter }  />
+                <CounterControl label="Add X" clicked={ this.props.onIncCounter }  />
+                <CounterControl label="Subtract X" clicked={ this.props.onDecCounter }  />
+                <hr/>
+                <button>Store Result</button>
+                <ul>
+                    <li></li>
+                </ul>
             </div>
         );
     }
 }
+
+
+let getRandomN = () => {
+    let number = (Math.floor(Math.random() * 6 + 1));
+    return number
+}
+
 
 const mapStateToProps = state => {
     return {
         ctr: state.counter
     };
 }
+
 const mapDispatchToProps = dispatch => {
     return {
-        onIncrementCounter:  () => dispatch({type: 'INCREMENT'}),
+        onIncrementCounter:  () => dispatch({ type: 'INCREMENT'}),
         onDecrementCounter: () => dispatch({ type: 'DECREMENT' }),
-        onINC5Counter: () => dispatch({ type: 'INC5', val: 5 }),
-        onDEC5Counter: () => dispatch({ type: 'DEC5', val: 5  })
+        onIncCounter: () => dispatch({ type: 'INC', val: getRandomN() }),
+        onDecCounter: () => dispatch({ type: 'DEC', val: getRandomN() })
     };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
-// if the container doesn't need  state (mapStateToProps) => null || actions (mapDispatchToProps) => delete
