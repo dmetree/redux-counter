@@ -1,7 +1,8 @@
 import * as actionTypes from './actions';
 
 const initialState = {
-    counter: 0,
+    heroHP: 100,
+    bossHP: 100,
     results: []
 }
 
@@ -9,30 +10,41 @@ const initialState = {
 const reducer = (state = initialState, action) => {
 
     switch ( action.type ){
-        case actionTypes.INCREMENT:
+
+
+// On-Hero Actions ====================================>    
+        case actionTypes.HIT:
             return {
                 ...state,
-                counter: state.counter + 1
+                bossHP: state.bossHP - action.heroHit,
+                heroHP: state.heroHP - action.enemyHit
             }
-        case actionTypes.DECREMENT:
+        case actionTypes.PUNCH:
             return {
                 ...state,
-                counter: state.counter - 1
+                bossHP: state.bossHP - action.heroPunch,
+                heroHP: state.heroHP - action.enemyHit
             }
-        case actionTypes.INC: 
+        case actionTypes.HEAL: 
             return {
                 ...state,
-                counter: state.counter + action.val
+                heroHP: state.heroHP + action.heroHeal - action.enemyHit
             }
-        case actionTypes.DEC:
+        case actionTypes.KILL:
             return {
                 ...state,
-                counter: state.counter - action.val
+                bossHP: state.bossHP * 0,
+                heroHP: state.heroHP * 0
             }
+
+
+
+// Store result ====================================>    
+
         case actionTypes.STORE_RESULT:
             return {
                 ...state,
-                results: state.results.concat({id: new Date(), val: state.counter})
+                results: state.results.concat({ id: new Date() * Math.random(), val: state.heroHP})
                 // concat() \\ new array = oldArray + newEl 
             }
         case actionTypes.DELETE_RESULT:

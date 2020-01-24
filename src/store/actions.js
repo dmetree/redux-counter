@@ -1,6 +1,6 @@
-export const INCREMENT = 'INCREMENT';
-export const DECREMENT = 'DECREMENT';
-export const INC = 'INC';
-export const DEC = 'DEC';
+export const HIT = 'HIT';
+export const PUNCH = 'PUNCH';
+export const HEAL = 'HEAL';
+export const KILL = 'KILL';
 export const STORE_RESULT = 'STORE_RESULT';
 export const DELETE_RESULT = 'DELETE_RESULT';

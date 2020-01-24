@@ -3,8 +3,14 @@ import React from 'react';
 import './CounterOutput.css';
 
 const counterOutput = (props) => (
+    // <div className="CounterOutput">
+    //     {props.playerName}: {props.value}
+    // </div>
     <div className="CounterOutput">
-        Current Counter: {props.value}
+        {props.playerName}: {props.value}
+        <div className="health-bar">
+            
+        </div>
     </div>
 );
 

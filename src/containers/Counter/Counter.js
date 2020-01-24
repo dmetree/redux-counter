@@ -3,24 +3,39 @@ import { connect } from 'react-redux';
 
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
+import './../../containers/counter.css';
+import BattleStatus from './../../components/battleStatus';
 import * as actionTypes from './../../store/actions';
+import * as hits from './../../store/generatedVars';
 
 class Counter extends Component {
 
+
+
+
     render() {
+
+        // let post = <p style={{ textAlign: 'center' }} >You've lost...</p>
+
         return (
             <div>
-                <CounterOutput value={this.props.ctr} />
-                <CounterControl label="Increment" clicked={this.props.onIncrementCounter} />
-                <CounterControl label="Decrement" clicked={this.props.onDecrementCounter} />
-                <CounterControl label="Add X" clicked={this.props.onIncCounter} />
-                <CounterControl label="Subtract X" clicked={this.props.onDecCounter} />
+                <div className="healthTab">
+                    <CounterOutput value={this.props.heroHP} playerName="Hero" />
+                    <CounterOutput value={this.props.bossHP} playerName="Boss" />
+                </div>
+
+               <BattleStatus/>
+               
+                                
+                <CounterControl label="Hit" clicked={this.props.onHit} />
+                <CounterControl label="Punch" clicked={this.props.onPunch} />
+                <CounterControl label="Heal" clicked={this.props.onHeal} />
+                <CounterControl label="Kill all" clicked={this.props.onKill} />
                 <hr />
-                {/* <button onClick={ this.props.onIncrementCounter } >IncrementCopy</button> */}
-                <button onClick={this.props.onStoreResult}>Store Result</button>
+                <CounterControl label="Store Result" clicked={this.props.onStoreResult} />
                 <ul>
                     {this.props.storedResults.map(strResult => (
-                        <li key={strResult.id} onClick={() => this.props.onDeleteResult(strResult.id) }>{strResult.val}</li>
+                        <li className="listItem" key={strResult.id} onClick={() => this.props.onDeleteResult(strResult.id) }>{strResult.val}</li>
                     ))}
 
                 </ul>
@@ -30,25 +45,21 @@ class Counter extends Component {
 }
 
 
-let getRandomN = () => {
-    let number = (Math.floor(Math.random() * 6 + 1));
-    return number
-}
-
-
 const mapStateToProps = state => {
     return {
-        ctr: state.counter,
+        heroHP: state.heroHP,
+        bossHP: state.bossHP,
         storedResults: state.results
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIncrementCounter: () => dispatch({ type: actionTypes.INCREMENT }),
-        onDecrementCounter: () => dispatch({ type: actionTypes.DECREMENT }),
-        onIncCounter: () => dispatch({ type: actionTypes.INC, val: getRandomN() }),
-        onDecCounter: () => dispatch({ type: actionTypes.DEC, val: getRandomN() }),
+        onHit: () => dispatch({ type: actionTypes.HIT, heroHit: hits.ordinaryHit(), enemyHit: hits.ordinaryHit() }),
+        onPunch: () => dispatch({ type: actionTypes.PUNCH, heroPunch: hits.ordinaryPunch(), enemyHit: hits.ordinaryHit() }),
+        onHeal: () => dispatch({ type: actionTypes.HEAL, heroHeal: hits.ordinaryHeal(), enemyHit: hits.ordinaryHit()  }),
+        onKill: () => dispatch({ type: actionTypes.KILL }),
+
         onStoreResult: () => dispatch({ type: actionTypes.STORE_RESULT }),
         onDeleteResult: (id) => dispatch({ type: actionTypes.DELETE_RESULT, resultElId: id }),
     };
