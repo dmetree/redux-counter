@@ -30,11 +30,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 heroHP: state.heroHP + action.heroHeal - action.enemyHit
             }
-        case actionTypes.KILL:
+        case actionTypes.RESTART:
             return {
                 ...state,
-                bossHP: state.bossHP * 0,
-                heroHP: state.heroHP * 0
+                bossHP: state.bossHP * 0 + 100,
+                heroHP: state.heroHP * 0 + 100
             }
 
 
